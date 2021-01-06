@@ -1,4 +1,14 @@
 .pigCard {
   background-color: lightgray;
-  width: 300px;
+  width: 350px;
+  height: auto;
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+.pigImg {
+  width: 100%;
 }

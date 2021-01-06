@@ -1,14 +1,15 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import Link from 'next/link';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
   return (
-    <Layout>
+    <div className={styles.homeContainer}>
       <p>
         <Link href='/pigs/pig-list'>
           <a>Check our pig offers</a>
         </Link>
       </p>
-    </Layout>
-  )
+      <img className={styles.coverImg} src='/images/pig.jpeg' />
+    </div>
+  );
 }

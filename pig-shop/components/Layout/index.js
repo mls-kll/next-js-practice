@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import styles from './layout.module.css'
+import Head from 'next/head';
+import styles from './layout.module.css';
 
 export default function Layout({ children }) {
   return (
@@ -7,10 +7,10 @@ export default function Layout({ children }) {
       <Head>
         <title>Pig Shop Home Page</title>
       </Head>
-      <header>
+      <header className={styles.header}>
         <h1>PIG SHOP</h1>
       </header>
       <main>{children}</main>
     </div>
-  )
+  );
 }
