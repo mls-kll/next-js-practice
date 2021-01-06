@@ -25,7 +25,7 @@ export default function Pig({ allPigData }) {
         img={allPigData.pigs[pigId].img}
         description={allPigData.pigs[pigId].description}
       />
-      <Link href='/pigs/pig-list'>
+      <Link href='/pigs'>
         <a>Back to pigs</a>
       </Link>
     </>

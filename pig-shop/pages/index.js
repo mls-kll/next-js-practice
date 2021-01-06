@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className={styles.homeContainer}>
       <p>
-        <Link href='/pigs/pig-list'>
+        <Link href='/pigs'>
           <a>Check our pig offers</a>
         </Link>
       </p>
