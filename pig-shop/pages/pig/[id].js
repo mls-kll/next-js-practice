@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import PigCard from '../../components/PigCard';
+import PigCard from '../../src/components/PigCard';
 import pigData from '../../pigData/pigData.json';
 
 export async function getServerSideProps() {

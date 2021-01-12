@@ -1,24 +1,26 @@
 import Link from 'next/link';
-import pigData from '../pigData/pigData.json';
-import PigCard from '../components/PigCard';
+import PigCard from '../src/components/PigCard';
 import styles from '../styles/pigs.module.css';
 
-export async function getStaticProps() {
-  const allPigData = pigData;
+export async function  getServerSideProps () {
+  const res = await fetch(`http://localhost:3000/api/pigs`)
+  const allPigData = await res.json()
+  console.log('allPigData', allPigData);
   return {
     props: {
-      allPigData,
-    },
-  };
+      allPigData
+    }
+  }
 }
+// apik helyett függvények
 
 export default function PigList({ allPigData }) {
   return (
     <div className={styles.pigListContainer}>
       <h3>Our pig offers for 2021</h3>
       <div className={styles.pigList}>
-        {allPigData.pigs.map((pig, index) => (
-          <PigCard index={index} key={pig.id} img={pig.img} breed={pig.breed} />
+        {allPigData?.map((pig, index) => (
+          <PigCard index={index} key={pig.fields.id} id={pig.fields.id} img={pig.fields.img.fields.file?.url} breed={pig.fields.breed} />
         ))}
       </div>
       <Link href='/'>
