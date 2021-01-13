@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export default function CartIndex({ items }) {
-  const cartItems = items.length < 1 ? 0 : items.length;
+  const cartItems = items.length;
   return (
     <>
       <Link href='/cart'>

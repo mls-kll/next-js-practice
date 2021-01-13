@@ -1,8 +1,11 @@
-import getContent from '../../utils/getContent';
+import getContent from '../../../utils/getContent';
 
 export default (req, res) => {
+  const {
+    query: { id },
+  } = req;
   return new Promise((resolve, reject) => {
-    getContent('pageContent')
+    getContent('pigItem', id)
       .then((result) => {
         res.status(200).json(result);
         resolve();

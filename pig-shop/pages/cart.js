@@ -13,7 +13,6 @@ export async function getStaticProps() {
 
 export default function CartPage ({ allPigData }) {
   const { cartState } = useCartContext();
-  console.log(cartState)
   return(
     <>
       <div>CART PAGE</div>
