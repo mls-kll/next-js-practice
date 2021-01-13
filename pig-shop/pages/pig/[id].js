@@ -1,30 +1,26 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 
 import PigCard from '../../src/components/PigCard';
-import pigData from '../../pigData/pigData.json';
 
-export async function getServerSideProps() {
-  const allPigData = pigData;
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+  const { publicRuntimeConfig } = getConfig();
+  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/pig/${id}`);
+  const pigData = await res.json();
+
   return {
     props: {
-      allPigData
+      pigData,
     },
   };
 }
 
-export default function Pig({ allPigData }) {
-  const router = useRouter();
-  const { id } = router.query;
-  const pigId = parseInt(id);
-
+export default function Pig({ pigData }) {
+  const { breed, img, desc } = pigData[0].fields;
   return (
     <>
-      <PigCard
-        breed={allPigData.pigs[pigId].breed}
-        img={allPigData.pigs[pigId].img}
-        description={allPigData.pigs[pigId].description}
-      />
+      <PigCard breed={breed} img={img.fields.file.url} description={desc} />
       <Link href='/pigs'>
         <a>Back to pigs</a>
       </Link>
