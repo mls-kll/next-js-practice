@@ -5,7 +5,6 @@ export default (req, res) => {
     const {
       query: { slug },
     } = req;
-    console.log(slug)
     getContent('pageContent', null, slug)
       .then((result) => {
         res.status(200).json(result);

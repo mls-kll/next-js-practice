@@ -24,11 +24,6 @@ export default function Home({ pageData }) {
       {customContent.map((content, index) => (
         <DataRenderer key={index} document={content} />
       ))}
-      <p>
-        <Link href='/pigs'>
-          <a>Check our pig offers</a>
-        </Link>
-      </p>
       <img className={styles.coverImg} src='/images/pig.jpeg' />
     </div>
   );

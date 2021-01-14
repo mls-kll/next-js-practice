@@ -1,9 +1,13 @@
+import getConfig from 'next/config';
+
 import PigCard from '../src/components/PigCard';
-import pigData from '../pigData/pigData.json';
 import { useCartContext } from '../src/context/cartContext';
 
-export async function getStaticProps() {
-  const allPigData = pigData;
+export async function getServerSideProps() {
+  const { publicRuntimeConfig } = getConfig();
+  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/pigs`);
+  const allPigData = await res.json();
+
   return {
     props: {
       allPigData,
@@ -11,16 +15,29 @@ export async function getStaticProps() {
   };
 }
 
-export default function CartPage ({ allPigData }) {
+export default function CartPage({ allPigData }) {
   const { cartState } = useCartContext();
-  return(
+  const cartContent = allPigData
+    .map((pigData, index) => {
+      return allPigData.filter((data) => {
+        return data.fields.id === cartState[index]?.id;
+      });
+    })
+    .flat();
+
+  return (
     <>
       <div>CART PAGE</div>
       <div>
-      {cartState.map((item, index) => (
-          <PigCard index={item.index} key={index} img={allPigData.pigs[item.index].img} breed={allPigData.pigs[item.index].breed} />
+        {cartContent.map((item, index) => (
+          <PigCard
+            key={item.fields.id}
+            id={item.fields.id}
+            img={item.fields.img.fields.file?.url}
+            breed={item.fields.breed}
+          />
         ))}
       </div>
-    </>  
-  )
+    </>
+  );
 }
