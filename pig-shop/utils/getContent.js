@@ -3,10 +3,11 @@ const client = require('contentful').createClient({
   accessToken: process.env.contentfulAccessToken,
 });
 
-export default async function getContent(contentType, id) {
+export default async function getContent(contentType, id, slug) {
   const entries = await client.getEntries({
     content_type: contentType,
-    'fields.id[in]': id,
+    ...(id && { 'fields.id[in]': id }),
+    ...(slug && { 'fields.slug[in]': slug }),
   });
   if (entries.items) return entries.items;
   console.log(`Error getting Entries for ${contentType.name}.`);

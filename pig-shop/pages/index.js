@@ -6,18 +6,17 @@ import DataRenderer from '../src/components/DataRenderer';
 
 export async function getServerSideProps() {
   const { publicRuntimeConfig } = getConfig();
-  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/content`);
-  const allPigData = await res.json();
+  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/content/home`);
+  const pageData = await res.json();
   return {
     props: {
-      allPigData,
+      pageData,
     },
   };
 }
 
-export default function Home({ allPigData }) {
-  const homePageData = allPigData.filter((data) => data.fields.slug === 'home');
-  const customContent = homePageData
+export default function Home({ pageData }) {
+  const customContent = pageData
     .map((data) => data.fields)
     .map((content) => content.customContent);
   return (
