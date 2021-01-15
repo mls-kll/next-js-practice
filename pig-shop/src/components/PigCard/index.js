@@ -10,8 +10,9 @@ export default function PigCard({ id, breed, img, description }) {
   const handleAddToCart = (id) =>
     setCartState((oldState) => [...oldState, { id }]);
 
-  const handleDeleteFromCart = (id) => {
-    console.log('remove');
+  const handleDeleteFromCart = (selectedId) => {
+    const newState = cartState.filter(item => item.id !== selectedId)
+    setCartState(newState);
   };
 
   const isCartPage = router.pathname.includes('cart');
@@ -29,7 +30,7 @@ export default function PigCard({ id, breed, img, description }) {
           add to cart
         </button>
       ) : (
-        <button onClick={handleDeleteFromCart}>remove from cart</button>
+        <button onClick={() => handleDeleteFromCart(id)}>remove from cart</button>
       )}
       {!description && (
         <Link href={`/pig/${id}`}>

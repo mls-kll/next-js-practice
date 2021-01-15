@@ -31,7 +31,7 @@ export default function CartPage({ allPigData }) {
       <div>
         {cartContent.map((item, index) => (
           <PigCard
-            key={item.fields.id}
+            key={index}
             id={item.fields.id}
             img={item.fields.img.fields.file?.url}
             breed={item.fields.breed}
