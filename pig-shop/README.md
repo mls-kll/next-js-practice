@@ -2,8 +2,8 @@
 
 module.exports = {
   env: {
-    contentfulSpace: <your contentful space>,
-    contentfulAccessToken: <your contentful acces id>,
+    contentfulSpace: your contentful space,
+    contentfulAccessToken: your contentful acces id,
   },
   publicRuntimeConfig: {
     baseUrl: 'http://localhost:3000',
