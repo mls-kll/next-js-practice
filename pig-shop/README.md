@@ -1,4 +1,4 @@
-1. Create a next.config.js file in the root folder with the following content:
+## Create a next.config.js file in the root folder with the following content:
 
 module.exports = {
   env: {
