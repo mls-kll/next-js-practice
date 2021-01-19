@@ -1,9 +1,9 @@
-1. Create a next.config.js file in the root folder with the following content:
+## Create a next.config.js file in the root folder with the following content:
 
 module.exports = {
   env: {
-    contentfulSpace: <your contentful space>,
-    contentfulAccessToken: <your contentful acces id>,
+    contentfulSpace: your contentful space,
+    contentfulAccessToken: your contentful acces id,
   },
   publicRuntimeConfig: {
     baseUrl: 'http://localhost:3000',
