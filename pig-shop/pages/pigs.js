@@ -3,11 +3,13 @@ import getConfig from 'next/config';
 
 import PigCard from '../src/components/PigCard';
 import styles from '../styles/pigs.module.css';
+import fetchDataWithCache from '../utils/fetchDataWithCache';
 
 export async function getServerSideProps() {
   const { publicRuntimeConfig } = getConfig();
-  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/pigs`);
-  const allPigData = await res.json();
+  const allPigData = await fetchDataWithCache(
+    `${publicRuntimeConfig.baseUrl}/api/pigs`
+  );
 
   return {
     props: {

@@ -1,12 +1,14 @@
 import getConfig from 'next/config';
 
 import PigCard from '../src/components/PigCard';
+import fetchDataWithCache from '../utils/fetchDataWithCache';
 import { useCartContext } from '../src/context/cartContext';
 
 export async function getServerSideProps() {
   const { publicRuntimeConfig } = getConfig();
-  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/pigs`);
-  const allPigData = await res.json();
+  const allPigData = await fetchDataWithCache(
+    `${publicRuntimeConfig.baseUrl}/api/pigs`
+  );
 
   return {
     props: {
@@ -17,14 +19,13 @@ export async function getServerSideProps() {
 
 export default function CartPage({ allPigData }) {
   const { cartState } = useCartContext();
-  const cartContent = allPigData
-    .map((pigData, index) => {
-      return allPigData.filter((data) => {
-        return data.fields.id === cartState[index]?.id;
-      });
-    })
-    .flat();
+  const cartData = allPigData.map((pigData, index) => {
+    return allPigData.filter((data) => {
+      return data.fields.id === cartState[index]?.id;
+    });
+  });
 
+  const cartContent = cartData[0].length > 0 ? cartData.flat() : [];
   return (
     <>
       <div>CART PAGE</div>

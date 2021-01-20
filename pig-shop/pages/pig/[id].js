@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import getConfig from 'next/config';
 
+import fetchDataWithCache from '../../utils/fetchDataWithCache';
 import PigCard from '../../src/components/PigCard';
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
   const { publicRuntimeConfig } = getConfig();
-  const res = await fetch(`${publicRuntimeConfig.baseUrl}/api/pig/${id}`);
-  const pigData = await res.json();
+  const pigData = await fetchDataWithCache(
+    `${publicRuntimeConfig.baseUrl}/api/pig/${id}`
+  );
 
   return {
     props: {

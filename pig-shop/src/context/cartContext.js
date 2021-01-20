@@ -15,5 +15,3 @@ export function CartContextProvider({children}) {
 export function useCartContext() {
   return useContext(CartContext);
 }
-
-// export { CartContext, CartContextProvider };
