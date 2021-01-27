@@ -1,10 +1,13 @@
+import React from 'react';
+import { GetServerSideProps } from 'next';
+
 import getConfig from 'next/config';
 
 import PigCard from '../src/components/PigCard';
 import fetchDataWithCache from '../utils/fetchDataWithCache';
 import { useCartContext } from '../src/context/cartContext';
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { publicRuntimeConfig } = getConfig();
   const allPigData = await fetchDataWithCache(
     `${publicRuntimeConfig.baseUrl}/api/pigs`
@@ -17,7 +20,34 @@ export async function getServerSideProps() {
   };
 }
 
-export default function CartPage({ allPigData }) {
+type PigImageUrl = {
+  url: string;
+}
+
+type PigImageFile = {
+  file: PigImageUrl;
+}
+
+type PigImage = {
+  fields: PigImageFile;
+}
+
+type PigItem = {
+  id: string;
+  breed: string;
+  img: PigImage;
+  desc: string;
+}
+
+type PigFields = {
+  fields: PigItem;
+}
+
+type CartPageProps = {
+  allPigData: PigFields[];
+}
+
+const CartPage = ({ allPigData }: CartPageProps) => {
   const { cartState } = useCartContext();
   const cartData = allPigData.map((pigData, index) => {
     return allPigData.filter((data) => {
@@ -42,3 +72,5 @@ export default function CartPage({ allPigData }) {
     </>
   );
 }
+
+export default CartPage;

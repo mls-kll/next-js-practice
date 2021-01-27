@@ -6,14 +6,14 @@ export const useCart = () => {
 
   const handleAddToCart = useCallback(
     (id) => {
-      setCartState((oldState) => [...oldState, { id }]);
+      setCartState((oldState: string[]) => [...oldState, { id }]);
     },
     [cartState]
   );
 
   const handleDeleteFromCart = useCallback(
     (selectedId) => {
-      const newState = cartState.filter((item) => item.id !== selectedId);
+      const newState = cartState.filter((item: object) => item.id !== selectedId);
       setCartState(newState);
     },
     [cartState]

@@ -9,7 +9,6 @@ export default async function fetchDataWithCache(url, options) {
     const res = await fetch(url, options);
     const data = await res.json();
     cacheData.put(url, data, minutes * 1000 * 60);
-    console.log('DATA FETCHED', data);
     return data;
   }
 }

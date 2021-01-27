@@ -1,6 +1,10 @@
 import Link from 'next/link';
 
-export default function CartIndex({ items }) {
+type CartIndexProps = {
+  items: string[]
+}
+
+const CartIndex = ({ items }: CartIndexProps) => {
   const cartItems = items.length;
   return (
     <>
@@ -10,3 +14,5 @@ export default function CartIndex({ items }) {
     </>
   );
 }
+
+export default CartIndex;

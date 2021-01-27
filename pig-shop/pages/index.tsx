@@ -1,11 +1,12 @@
-import Link from 'next/link';
+import React from 'react';
 import getConfig from 'next/config';
+import { GetServerSideProps } from 'next';
 
 import fetchDataWithCache from '../utils/fetchDataWithCache';
 import styles from '../styles/Home.module.css';
 import DataRenderer from '../src/components/DataRenderer';
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { publicRuntimeConfig } = getConfig();
   const pageData = await await fetchDataWithCache(
     `${publicRuntimeConfig.baseUrl}/api/content/home`
@@ -17,16 +18,22 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home({ pageData }) {
+type HomeProps = {
+  pageData: string[]
+}
+
+const Home = ({ pageData }: HomeProps) => {
   const customContent = pageData
     .map((data) => data.fields)
-    .map((content) => content.customContent);
+    .map((content: object) => content.customContent);
   return (
     <div className={styles.homeContainer}>
-      {customContent.map((content, index) => (
+      {customContent.map((content: object, index: number) => (
         <DataRenderer key={index} document={content} />
       ))}
       <img className={styles.coverImg} src='/images/pig.jpeg' />
     </div>
   );
 }
+
+export default Home;

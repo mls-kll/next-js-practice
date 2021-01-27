@@ -4,7 +4,14 @@ import { useRouter } from 'next/router';
 import { useCart } from '../../hooks/cart';
 import styles from './PigCard.module.css';
 
-export default function PigCard({ id, breed, img, description }) {
+type PigCardProps = {
+  id?: string, 
+  breed: string, 
+  img: string, 
+  description?: string
+}
+
+const PigCard = ({ id, breed, img, description } : PigCardProps) => {
   const router = useRouter();
   const  [handleAddToCart, handleDeleteFromCart] = useCart();
   const isCartPage = router.pathname.includes('cart');
@@ -32,3 +39,5 @@ export default function PigCard({ id, breed, img, description }) {
     </div>
   );
 }
+
+export default PigCard;

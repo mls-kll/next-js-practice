@@ -1,3 +1,4 @@
+import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -5,7 +6,11 @@ import { useCartContext } from '../../context/cartContext';
 import CartIndex from '../CartIndex';
 import styles from './layout.module.css';
 
-export default function Layout({ children }) {
+type LayoutProps = {
+  children: React.Component
+}
+
+ const Layout = ({ children }: LayoutProps) => {
   const { cartState } = useCartContext();
   return (
     <div className={styles.container}>
@@ -24,3 +29,5 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+export default Layout;
