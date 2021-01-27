@@ -3,7 +3,11 @@ const client = require('contentful').createClient({
   accessToken: process.env.contentfulAccessToken,
 });
 
-export default async function getContent(contentType, id, slug) {
+type ContentTypeProp = {
+  name: string
+}
+
+export default async function getContent(contentType: ContentTypeProp, id: string, slug: string) {
   const entries = await client.getEntries({
     content_type: contentType,
     ...(id && { 'fields.id[in]': id }),
