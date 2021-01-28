@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import getConfig from 'next/config';
 
 import PigCard from '../src/components/PigCard';
 import styles from '../styles/pigs.module.css';
 import fetchDataWithCache from '../utils/fetchDataWithCache';
+import { PigFields } from '../types';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { publicRuntimeConfig } = getConfig();
   const allPigData = await fetchDataWithCache(
     `${publicRuntimeConfig.baseUrl}/api/pigs`
@@ -17,37 +18,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       allPigData,
     },
+    revalidate: 90,
   };
-}
-
-type PigImageUrl = {
-  url: string;
-}
-
-type PigImageFile = {
-  file: PigImageUrl;
-}
-
-type PigImage = {
-  fields: PigImageFile;
-}
-
-type PigItem = {
-  id: string;
-  breed: string;
-  img: PigImage;
-  desc: string;
-}
-
-type PigFields = {
-  fields: PigItem;
-}
+};
 
 type PigListProps = {
   allPigData: PigFields[];
-}
+};
 
-const PigList = ({ allPigData } : PigListProps) => {
+const PigList = ({ allPigData }: PigListProps) => {
   return (
     <div className={styles.pigListContainer}>
       <h3>Our pig offers for 2021</h3>
@@ -66,6 +45,6 @@ const PigList = ({ allPigData } : PigListProps) => {
       </Link>
     </div>
   );
-}
+};
 
 export default PigList;

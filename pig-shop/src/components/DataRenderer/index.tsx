@@ -1,16 +1,13 @@
 import React from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-  
-type DataRendererProps = {
-  document: object
-}
+import { Document } from '@contentful/rich-text-types';
 
- const DataRenderer = ({ document }: DataRendererProps) => {
-  return(
-    <>
-     {documentToReactComponents(document)}
-    </>
-  )
-}
+type DataRendererProps = {
+  document: Document;
+};
+
+const DataRenderer = ({ document }: DataRendererProps) => {
+  return <>{documentToReactComponents(document)}</>;
+};
 
 export default DataRenderer;

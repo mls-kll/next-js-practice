@@ -5,15 +5,15 @@ import { useCart } from '../../hooks/cart';
 import styles from './PigCard.module.css';
 
 type PigCardProps = {
-  id?: string, 
-  breed: string, 
-  img: string, 
-  description?: string
-}
+  id?: string;
+  breed: string;
+  img: string;
+  description?: string;
+};
 
-const PigCard = ({ id, breed, img, description } : PigCardProps) => {
+const PigCard = ({ id, breed, img, description }: PigCardProps) => {
   const router = useRouter();
-  const  [handleAddToCart, handleDeleteFromCart] = useCart();
+  const [handleAddToCart, handleDeleteFromCart] = useCart();
   const isCartPage = router.pathname.includes('cart');
 
   return (
@@ -24,12 +24,14 @@ const PigCard = ({ id, breed, img, description } : PigCardProps) => {
       {!isCartPage ? (
         <button
           className={styles.addToCartBtn}
-          onClick={() => handleAddToCart(id)}
+          onClick={() => handleAddToCart(id as string)}
         >
           add to cart
         </button>
       ) : (
-        <button onClick={() => handleDeleteFromCart(id)}>remove from cart</button>
+        <button onClick={() => handleDeleteFromCart(id as string)}>
+          remove from cart
+        </button>
       )}
       {!description && (
         <Link href={`/pig/${id}`}>
@@ -38,6 +40,6 @@ const PigCard = ({ id, breed, img, description } : PigCardProps) => {
       )}
     </div>
   );
-}
+};
 
 export default PigCard;

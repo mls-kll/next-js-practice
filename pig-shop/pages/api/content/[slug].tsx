@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next';
 import getContent from '../../../utils/getContent';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -6,7 +6,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     query: { slug },
   } = req;
   try {
-    const result = await getContent('pageContent', null, slug);
+    const result = await getContent('pageContent');
     res.status(200).json(result);
   } catch (e) {
     console.log('error', e);

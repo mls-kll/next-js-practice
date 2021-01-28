@@ -7,10 +7,10 @@ import CartIndex from '../CartIndex';
 import styles from './layout.module.css';
 
 type LayoutProps = {
-  children: React.Component
-}
+  children: React.ReactChild;
+};
 
- const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   const { cartState } = useCartContext();
   return (
     <div className={styles.container}>
@@ -18,16 +18,16 @@ type LayoutProps = {
         <title>Pig Shop Home Page</title>
       </Head>
       <header className={styles.header}>
-      <Link href='/'>
-        <a>
-          <h1>PIG SHOP</h1>
-        </a> 
-      </Link>
-      <CartIndex items={cartState} />
+        <Link href='/'>
+          <a>
+            <h1>PIG SHOP</h1>
+          </a>
+        </Link>
+        <CartIndex items={(cartState as unknown) as string[]} />
       </header>
       <main>{children}</main>
     </div>
   );
-}
+};
 
 export default Layout;

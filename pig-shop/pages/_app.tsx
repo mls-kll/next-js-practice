@@ -1,11 +1,11 @@
-import React from 'react'
-import { AppProps } from 'next/app'
+import React from 'react';
+import { AppProps } from 'next/app';
 
 import '../styles/globals.css';
 import Layout from '../src/components/Layout';
 import { CartContextProvider } from '../src/context/cartContext';
 
-const MyApp = ({ Component, pageProps }: AppProps ) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <CartContextProvider>
       <Layout>
@@ -13,6 +13,6 @@ const MyApp = ({ Component, pageProps }: AppProps ) => {
       </Layout>
     </CartContextProvider>
   );
-}
+};
 
 export default MyApp;

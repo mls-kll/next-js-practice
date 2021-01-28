@@ -1,6 +1,9 @@
 import cacheData from 'memory-cache';
 
-export default async function fetchDataWithCache(url, options) {
+export default async function fetchDataWithCache(
+  url: string,
+  options?: object
+) {
   const value = cacheData.get(url);
   if (value) {
     return value;

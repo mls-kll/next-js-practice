@@ -1,20 +1,24 @@
+import React from 'react';
 import { useCallback } from 'react';
-import { useCartContext } from '../context/cartContext';
+import { useCartContext, CartItemType } from '../context/cartContext';
 
 export const useCart = () => {
   const { cartState, setCartState } = useCartContext();
 
   const handleAddToCart = useCallback(
-    (id) => {
-      setCartState((oldState: string[]) => [...oldState, { id }]);
+    (id: string) => {
+      const newState = [...(cartState || []), { id }];
+      setCartState?.(newState);
     },
     [cartState]
   );
 
   const handleDeleteFromCart = useCallback(
     (selectedId) => {
-      const newState = cartState.filter((item: object) => item.id !== selectedId);
-      setCartState(newState);
+      const newState = (cartState || []).filter(
+        (item: CartItemType) => item.id !== selectedId
+      );
+      setCartState?.(newState);
     },
     [cartState]
   );

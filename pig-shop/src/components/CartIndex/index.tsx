@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 type CartIndexProps = {
-  items: string[]
-}
+  items: string[];
+};
 
 const CartIndex = ({ items }: CartIndexProps) => {
   const cartItems = items.length;
@@ -13,6 +13,6 @@ const CartIndex = ({ items }: CartIndexProps) => {
       </Link>
     </>
   );
-}
+};
 
 export default CartIndex;

@@ -2,11 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import getContent from '../../../utils/getContent';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    query: { id },
-  } = req;
   try {
-    const result = await getContent('pigItem', id);
+    const result = await getContent('pigItem');
     res.status(200).json(result);
   } catch (e) {
     console.log('error', e);

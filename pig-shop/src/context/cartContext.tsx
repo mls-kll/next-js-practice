@@ -1,28 +1,31 @@
 import { createContext, useContext, useState } from 'react';
 import React from 'react';
 
-const CartContext = createContext({})
+export type CartItemType = {
+  id: string;
+};
 
-type CartContextProviderProps = {
-  children: React.Component
-}
+export type CartStateType = {
+  cartState?: CartItemType[];
+  setCartState?: (newState: CartItemType[]) => void;
+};
 
-type CartType = {
-  cartState: string[]
+export const CartContext = createContext<CartStateType>({});
+
+export type CartContextProviderProps = {
+  children: React.ReactChild;
 };
 
 const CartContextProvider = ({ children }: CartContextProviderProps) => {
-  const [cartState, setCartState] = useState([]);
-  const value = { cartState, setCartState }
+  const [cartState, setCartState] = useState<CartItemType[]>([]);
+
   return (
-    <CartContext.Provider value={value}>
+    <CartContext.Provider value={{ cartState, setCartState }}>
       {children}
     </CartContext.Provider>
-  )
-}
+  );
+};
 
-const cartContext = () => {
-  return useContext(CartContext);
-}
+const useCartContext = () => useContext(CartContext);
 
-export { CartContextProvider, cartContext as useCartContext};
+export { CartContextProvider, useCartContext };
