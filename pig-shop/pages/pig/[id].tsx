@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import getConfig from 'next/config';
 
-import fetchDataWithCache from '../../utils/fetchDataWithCache';
 import PigCard from '../../src/components/PigCard';
 import { PigFields } from '../../types';
 import getContent from '../../utils/getContent';
