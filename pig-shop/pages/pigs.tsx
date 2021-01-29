@@ -1,24 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import getConfig from 'next/config';
+import getContent from '../utils/getContent';
 
 import PigCard from '../src/components/PigCard';
 import styles from '../styles/pigs.module.css';
-import fetchDataWithCache from '../utils/fetchDataWithCache';
 import { PigFields } from '../types';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { publicRuntimeConfig } = getConfig();
-  const allPigData = await fetchDataWithCache(
-    `${publicRuntimeConfig.baseUrl}/api/pigs`
-  );
+  const allPigData = await getContent('pigItem')
 
   return {
     props: {
       allPigData,
     },
-    revalidate: 90,
+    revalidate: 15,
   };
 };
 

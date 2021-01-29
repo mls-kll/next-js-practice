@@ -6,6 +6,7 @@ import getConfig from 'next/config';
 import fetchDataWithCache from '../../utils/fetchDataWithCache';
 import PigCard from '../../src/components/PigCard';
 import { PigFields } from '../../types';
+import getContent from '../../utils/getContent';
 
 type PigIdType = {
   id: string;
@@ -17,9 +18,7 @@ type PigType = {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { publicRuntimeConfig } = getConfig();
-  const allPigData = await fetchDataWithCache(
-    `${publicRuntimeConfig.baseUrl}/api/pigs`
-  );
+  const allPigData = await getContent('pigItem')
   const paths = allPigData.map((pig: PigType) => ({
     params: { id: pig.fields.id },
   }));
@@ -27,16 +26,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { publicRuntimeConfig } = getConfig();
-  const pigData = await fetchDataWithCache(
-    `${publicRuntimeConfig.baseUrl}/api/pig/${params?.id}`
-  );
+  const pigData = await getContent('pigItem')
 
   return {
     props: {
       pigData,
     },
-    revalidate: 90,
+    revalidate: 15,
   };
 };
 

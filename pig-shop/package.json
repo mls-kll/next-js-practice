@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prod": "node",
-    "start": "next start"
+    "start": "next start",
+    "prod_start": "NODE_ENV=production next start"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^14.1.2",

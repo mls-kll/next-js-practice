@@ -1,24 +1,19 @@
 import React from 'react';
-import getConfig from 'next/config';
+import getContent from '../utils/getContent';
 import { GetStaticProps } from 'next';
 
-import fetchDataWithCache from '../utils/fetchDataWithCache';
 import styles from '../styles/Home.module.css';
 import DataRenderer from '../src/components/DataRenderer';
 import { Document } from '@contentful/rich-text-types';
-import { FieldType } from 'contentful';
-import { title } from 'process';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { publicRuntimeConfig } = getConfig();
-  const pageData = await await fetchDataWithCache(
-    `${publicRuntimeConfig.baseUrl}/api/content/home`
-  );
+  const pageData = await getContent('pageContent')
+
   return {
     props: {
       pageData,
     },
-    revalidate: 90,
+    revalidate: 15,
   };
 };
 
