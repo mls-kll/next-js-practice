@@ -41,10 +41,10 @@ type PigProps = {
 };
 
 const Pig = ({ pigData }: PigProps) => {
-  const { breed, img, desc } = pigData?.[0]?.fields;
+  const { breed, img, desc, id } = pigData?.[0]?.fields;
   return (
     <>
-      <PigCard breed={breed} img={img.fields.file.url} description={desc} />
+      <PigCard breed={breed} img={img.fields.file.url} description={desc} id={id} />
       <Link href='/pigs'>
         <a>Back to pigs</a>
       </Link>
