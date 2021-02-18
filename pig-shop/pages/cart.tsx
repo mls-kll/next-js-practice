@@ -3,11 +3,11 @@ import { GetStaticProps } from 'next';
 
 import PigCard from '../src/components/PigCard';
 import { useCartContext } from '../src/context/cartContext';
-import { PigFields } from '../types';
-import getContent from '../utils/getContent';
+import { PigItem } from '../types';
+import { getPigs } from '../utils/getContent';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const allPigData = await getContent('pigItem')
+  const allPigData = await getPigs();
   return {
     props: {
       allPigData,
@@ -17,14 +17,14 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 type CartPageProps = {
-  allPigData: PigFields[];
+  allPigData: PigItem[];
 };
 
 const CartPage = ({ allPigData }: CartPageProps) => {
   const { cartState } = useCartContext();
   const cartData = allPigData.map((pigData, index) => {
     return allPigData.filter((data) => {
-      return data.fields.id === cartState?.[index]?.id;
+      return data._id === cartState?.[index]?.id;
     });
   });
 
@@ -36,9 +36,9 @@ const CartPage = ({ allPigData }: CartPageProps) => {
         {cartContent.map((item, index) => (
           <PigCard
             key={index}
-            id={item.fields.id}
-            img={item.fields.img.fields.file?.url}
-            breed={item.fields.breed}
+            id={item._id}
+            img={`data:image/png;base64, ${item.img || ''}`}
+            breed={item.breed}
           />
         ))}
       </div>

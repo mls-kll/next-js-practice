@@ -1,15 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import getContent from '../utils/getContent';
 
 import PigCard from '../src/components/PigCard';
 import styles from '../styles/pigs.module.css';
-import { PigFields } from '../types';
+import { PigItem } from '../types';
+import { getPigs } from '../utils/getContent';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const allPigData = await getContent('pigItem')
-
+  const allPigData = await getPigs();
   return {
     props: {
       allPigData,
@@ -19,7 +18,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 type PigListProps = {
-  allPigData: PigFields[];
+  allPigData: PigItem[];
 };
 
 const PigList = ({ allPigData }: PigListProps) => {
@@ -29,10 +28,10 @@ const PigList = ({ allPigData }: PigListProps) => {
       <div className={styles.pigList}>
         {allPigData?.map((pig, index) => (
           <PigCard
-            key={pig.fields.id}
-            id={pig.fields.id}
-            img={pig.fields.img.fields.file?.url}
-            breed={pig.fields.breed}
+            key={pig._id}
+            id={pig._id}
+            img={`data:image/png;base64, ${pig.img || ''}`}
+            breed={pig.breed}
           />
         ))}
       </div>

@@ -11,10 +11,10 @@ export type PigImage = {
 };
 
 export type PigItem = {
-  id: string;
+  _id: string;
   breed: string;
-  img: PigImage;
-  desc: string;
+  img: string;
+  description: string;
 };
 
 export type PigFields = {

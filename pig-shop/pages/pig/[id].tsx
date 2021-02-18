@@ -1,31 +1,27 @@
 import React from 'react';
 import Link from 'next/link';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import getConfig from 'next/config';
 
 import PigCard from '../../src/components/PigCard';
-import { PigFields } from '../../types';
-import getContent from '../../utils/getContent';
-
-type PigIdType = {
-  id: string;
-};
+import { PigItem } from '../../types';
+import { getPigs, getPig } from '../../utils/getContent';
 
 type PigType = {
-  fields: PigIdType;
+  _id: string;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { publicRuntimeConfig } = getConfig();
-  const allPigData = await getContent('pigItem')
-  const paths = allPigData.map((pig: PigType) => ({
-    params: { id: pig.fields.id },
-  }));
+  const allPigData = await getPigs();
+  const paths = allPigData.map((pig: PigType) => {
+    return {
+      params: { id: pig._id },
+    };
+  });
   return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const pigData = await getContent('pigItem')
+  const pigData = await await getPig(params?.id as string);
 
   return {
     props: {
@@ -36,14 +32,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 type PigProps = {
-  pigData: PigFields[];
+  pigData: PigItem;
 };
 
 const Pig = ({ pigData }: PigProps) => {
-  const { breed, img, desc, id } = pigData?.[0]?.fields;
+  const { breed, img, description, _id } = pigData;
   return (
     <>
-      <PigCard breed={breed} img={img.fields.file.url} description={desc} id={id} />
+      <PigCard
+        breed={breed}
+        img={`data:image/png;base64, ${img || ''}`}
+        description={description}
+        id={_id}
+      />
       <Link href='/pigs'>
         <a>Back to pigs</a>
       </Link>
