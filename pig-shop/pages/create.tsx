@@ -29,23 +29,10 @@ const CreatePage = () => {
     data.append('breed', pigData.breed);
     data.append('description', pigData.description);
     data.append('img', pigImage);
-    try {
-      /*       const res = await fetch('http://localhost:8080/pigs', {
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      });
 
-      const result = await res.json(); */
-
-      Axios.post('http://localhost:8080/pigs', data)
-        .then((res) => setFormMessage('Your pig is saved'))
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log('an error occured', error);
-    }
+    Axios.post('http://localhost:8080/pigs', data)
+      .then((res) => setFormMessage('Your pig is saved'))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -67,9 +54,17 @@ const CreatePage = () => {
         </div>
         <div className={styles.formFieldWrapper}>
           <label htmlFor='img'>image</label>
-          <input className={styles.imgInputBtn} name='img' type='file' onChange={handleImageChange} required />
+          <input
+            className={styles.imgInputBtn}
+            name='img'
+            type='file'
+            onChange={handleImageChange}
+            required
+          />
         </div>
-        <button className={styles.submitPigBtn} type='submit'>Add Pig</button>
+        <button className={styles.submitPigBtn} type='submit'>
+          Add Pig
+        </button>
       </form>
       {formMessage && <p>{formMessage.message}</p>}
     </div>
