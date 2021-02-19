@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
 import Axios from 'axios';
 
 import styles from '../styles/create.module.css';
@@ -9,29 +9,35 @@ const CreatePage = () => {
     description: '',
   });
 
-  const [pigImage, setPigImage] = useState();
+  const [pigImage, setPigImage] = useState<File>();
 
   const [formMessage, setFormMessage] = useState({
     message: '',
   });
 
-  const handleChange = (event) =>
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     setPigData({ ...pigData, [event.target.name]: event.target.value });
 
-  const handleImageChange = (event) => {
-    setPigImage(event.target.files[0]);
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (files) {
+      setPigImage(files[0]);
+    } else {
+      setFormMessage({ message: 'No file selected' });
+    }
   };
 
-  const addPig = async (event) => {
+  const addPig = async (event: FormEvent) => {
     event.preventDefault();
 
     const data = new FormData();
     data.append('breed', pigData.breed);
     data.append('description', pigData.description);
-    data.append('img', pigImage);
+    data.append('img', pigImage!);
 
     Axios.post('http://localhost:8080/pigs', data)
-      .then((res) => setFormMessage('Your pig is saved'))
+      .then((res) => setFormMessage({ message: 'Your pig is saved' }))
       .catch((err) => console.log(err));
   };
 

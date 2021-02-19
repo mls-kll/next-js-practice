@@ -16,6 +16,12 @@ const PigCard = ({ id, breed, img, description }: PigCardProps) => {
   const [handleAddToCart, handleDeleteFromCart] = useCart();
   const isCartPage = router.pathname.includes('cart');
 
+  const handleDeletePig = async (id: string) => {
+    const response = await fetch(`http://localhost:8080/pig/${id}`, {
+      method: 'DELETE',
+    });
+    return response;
+  };
   return (
     <div className={styles.pigCard}>
       <p>{breed}</p>
@@ -33,6 +39,12 @@ const PigCard = ({ id, breed, img, description }: PigCardProps) => {
           remove from cart
         </button>
       )}
+      <button
+        className={styles.addToCartBtn}
+        onClick={() => handleDeletePig(id as string)}
+      >
+        delete from database
+      </button>
       {!description && (
         <Link href={`/pig/${id}`}>
           <a>view details</a>
