@@ -9,6 +9,9 @@ const Home = () => {
       <Link href='/pigs'>
         <a>Check our pig offers</a>
       </Link>
+      <Link href='/create'>
+        <a>Create your own pig!</a>
+      </Link>
       <img className={styles.coverImg} src='/images/pig.jpeg' />
     </div>
   );
