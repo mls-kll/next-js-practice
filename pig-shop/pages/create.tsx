@@ -10,7 +10,7 @@ const CreatePage = () => {
   });
 
   const [pigImage, setPigImage] = useState<File>();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [formMessage, setFormMessage] = useState({
     message: '',
   });
@@ -30,15 +30,22 @@ const CreatePage = () => {
 
   const addPig = async (event: FormEvent) => {
     event.preventDefault();
-
+    setIsLoading(true);
     const data = new FormData();
     data.append('breed', pigData.breed);
     data.append('description', pigData.description);
     data.append('img', pigImage!);
 
-    Axios.post('http://localhost:8080/pigs', data)
-      .then((res) => setFormMessage({ message: 'Your pig is saved' }))
-      .catch((err) => console.log(err));
+    try {
+      const result = await Axios.post('http://localhost:8080/pigs', data);
+      if (result.request.status === 200) {
+        setIsLoading(false);
+        setFormMessage({ message: 'Your pig is saved' });
+      }
+    } catch (error) {
+      console.log(error);
+      setFormMessage({ message: 'An error occured' });
+    }
   };
 
   return (
@@ -73,6 +80,7 @@ const CreatePage = () => {
         </button>
       </form>
       {formMessage && <p>{formMessage.message}</p>}
+      {isLoading && <p>saving data...</p>}
     </div>
   );
 };

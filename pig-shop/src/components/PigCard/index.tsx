@@ -9,19 +9,14 @@ type PigCardProps = {
   breed: string;
   img: string;
   description?: string;
+  handleDeletePig: Function;
 };
 
-const PigCard = ({ id, breed, img, description }: PigCardProps) => {
+const PigCard = ({ id, breed, img, description, handleDeletePig }: PigCardProps) => {
   const router = useRouter();
   const [handleAddToCart, handleDeleteFromCart] = useCart();
   const isCartPage = router.pathname.includes('cart');
 
-  const handleDeletePig = async (id: string) => {
-    const response = await fetch(`http://localhost:8080/pig/${id}`, {
-      method: 'DELETE',
-    });
-    return response;
-  };
   return (
     <div className={styles.pigCard}>
       <p>{breed}</p>

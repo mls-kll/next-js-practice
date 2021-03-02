@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
 
@@ -22,16 +22,28 @@ type PigListProps = {
 };
 
 const PigList = ({ allPigData }: PigListProps) => {
+  const [pigData, setPigData] = useState(allPigData);
+
+  const handleDeletePig = async (id: string) => {
+    const response = await fetch(`http://localhost:8080/pig/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    setPigData(result);
+    return response;
+  };
+
   return (
     <div className={styles.pigListContainer}>
       <h3>Our pig offers for 2021</h3>
       <div className={styles.pigList}>
-        {allPigData?.map((pig, index) => (
+        {pigData?.map((pig, index) => (
           <PigCard
             key={pig._id}
             id={pig._id}
             img={`data:image/png;base64, ${pig.img || ''}`}
             breed={pig.breed}
+            handleDeletePig={handleDeletePig}
           />
         ))}
       </div>
